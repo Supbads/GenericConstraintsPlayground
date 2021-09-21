@@ -12,10 +12,23 @@ namespace Program
             var carFrame = planeFactory.Create<Frame>();
 
             IProduct<Car> carProduct = carFactory.Create<Toyota>();
+            //carProduct = carFactory.Create<Boeing>(); // Boeing is not a Car product
+            carProduct.Operate();
+
             carProduct = carFactory.Create<Engine<Car>>();
+            //carProduct = carFactory.Create<Engine<Plane>>(); // Create forces the generic type to have the same factory type
+            carProduct.Operate();
+
+            carProduct = carFactory.Create<Saab>();
             carProduct.Operate();
 
             IProduct<Plane> planeProduct = planeFactory.Create<Engine<Plane>>();
+            //planeProduct = planeFactory.Create<Engine<Plane>>(); // Create forces the generic type to have the same factory type
+            planeProduct.Operate();
+
+            planeProduct = planeFactory.Create<Boeing>();
+            planeProduct.Operate();
+
         }
     }
 
@@ -91,7 +104,7 @@ namespace Program
     {
         public void Operate()
         {
-            Console.WriteLine("Operating Engine.");
+            Console.WriteLine($"Operating Engine of type {typeof(TFactory).Name}.");
         }
 
         public void EngineSpecificOperation()
